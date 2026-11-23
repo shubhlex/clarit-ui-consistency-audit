@@ -102,4 +102,23 @@
 
 <hr/>
 
-17. 
+17. Buttons for the next step should be the same for all the steps, and all the modules should be Save and  - basically these next and all buttons should be consistent across all modules. A Complete or Submit button that is it what is required keep it short and simple, there is no need to make a large button with text in it - so make sure everything should be consistent the hover effects the loader and all.
+
+- make sure every button should have a loading spinner effect, so that we could stop unnecessary repetitive clicks.
+
+<hr/>
+
+18. For adding the approvers, follow this UI below: i gues its in the audit and inspection module im not sure you can check and confirm it:, so make sure the places wherever the approvers adding is there so make sure that table and adding UI and all should be like this:
+
+![Media for point 18](media/18.png)
+
+<hr/>
+
+19. Regarding the AUDIT TRAILS & SIGNATURES: So there's a new UI for this that is being decided to keep the audit trails: so for reference see the 'Advisory Notices, Field Actions and Recalls' module see how it can be slided/collapsed from the right side there so it should be like this across all the modules: and yeah also keep the signatures like in this way.
+
+![Media for point 19](media/19_a.png)
+![Media for point 19](media/19_b.png)
+
+
+<hr/>
+
