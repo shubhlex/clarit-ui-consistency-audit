@@ -1,7 +1,7 @@
 # Lexim Clarit - UI Consistency Audit (AI-agent briefing + decided points)
 
 > **If you are an AI coding agent, read this whole top section before touching anything.**
-> The 19 numbered points further down are the *decisions*. This section is the *context, scope, safety rules and method* for applying them.
+> The 20 numbered points further down are the *decisions*. This section is the *context, scope, safety rules and method* for applying them.
 
 ---
 
@@ -57,7 +57,7 @@ Paths are relative to `lexim-clarit/`. **Verify the file still exists and read i
 
 1. Read this README fully and **look at every image** in `media/`.
 2. Read `claude-stuff/notes/` for a note on the current module, and `DOCS/HANDOFF.md`.
-3. **Audit first, no edits:** for the current module, go through points 1-19 and produce a checklist: *already consistent / needs change / not applicable (why)*, with the file(s) involved. Show it to the user and get a go-ahead unless they said to proceed directly.
+3. **Audit first, no edits:** for the current module, go through points 1-20 and produce a checklist: *already consistent / needs change / not applicable (why)*, with the file(s) involved. Show it to the user and get a go-ahead unless they said to proceed directly.
 4. Implement point by point (small, reviewable steps). After each point, re-check the pages you touched.
 5. **Verify before claiming done** (from `lexim-clarit/`, Python 3.11 venv):
    - `python manage.py check` -> 0 issues
@@ -105,11 +105,12 @@ These resolve small contradictions/gaps in the notes below so agents behave cons
 | 17 Consistent buttons + spinners | ☐ | ☐ | ☐ |
 | 18 Approvers UI | ☐ | ☐ | ☐ |
 | 19 Audit/Signatures panel | ☐ | ☐ | ☐ |
+| 20 No Master Data / Guidance card | ☐ | ☐ | ☐ |
 
 ## H. Copy-paste prompt (use in any module/branch)
 
 ```text
-Read DOCS/CONSISTENCY/README.md completely (sections A-H and all 19 points) and look at every image in DOCS/CONSISTENCY/media/. Then make the module I'm currently working in (<MODULE NAME>, on the current git branch) UI-consistent with the decided points.
+Read DOCS/CONSISTENCY/README.md completely (sections A-H and all 20 points) and look at every image in DOCS/CONSISTENCY/media/. Then make the module I'm currently working in (<MODULE NAME>, on the current git branch) UI-consistent with the decided points.
 
 Rules: follow section D strictly. Change only what the points require, do not break or alter anything that already works (workflows, e-signatures, audit logs, permissions, URLs, data), do not edit shared files (base.html, partials, shared CSS/JS) or other modules without asking me, and never touch the 4 Cognito bypass files.
 
@@ -246,3 +247,8 @@ Step 1: do NOT edit yet - give me the audit checklist for this module (per point
 
 <hr/>
 
+20. Remove the "Master Data Inspection & Guidance" card (the box shown under the task panel on the workspace page: item, spec, critical component, approved supplier, regulatory authorizations) from the workspace. No replacement is needed; the form fields and dropdowns keep working exactly as before. After this, the only side content on the workspace is the Audit Trail / Signatures panel (point 19). Applies to any module whose workspace has a similar guidance / master-data info card under or beside the task area (first found in NCMR; CAPA's workspace also mentions "Guidance" - its owner should check).
+
+![Media for point 20](media/20.png)
+
+<hr/>
