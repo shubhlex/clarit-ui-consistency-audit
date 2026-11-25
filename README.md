@@ -145,6 +145,30 @@ Step 1: do NOT edit yet - give me the audit checklist for this module (per point
     - Needs Attention(a Needs Attention tab will be there where its needed or in all modules where it is role-based, so users can check what they have to approve or check forms there as well)
     - Administration 
 
+- The Main Page structure - just to sum up:
+    - The module/ page should have the following TABS for every module:
+        - Registry - To display all documents in a tabular format.
+        - overview - To display the module's performance and status through dynamic graphs.
+        - needs attention - To highlight documents requiring action.
+        - records - To maintain year-wise and month-wise records.
+        - Administration - To manage module-specific settings and responsibilities.
+
+- **The Registry should display all documents in a standard table with the following columns: Number, Title, Source, Current Stage, Owner, Days Open,Target Due Date, Status, Action** (this is correctly implemented in Deviation currently)
+    - The Registry layout/UI should remain the same across all modules.
+
+- Action (3-dot menu):
+    - Open Workspace
+    - View Dossier
+    - View Audit Trail
+
+- Needs Attention Tab/Page: This section should highlight documents that require immediate attention.
+
+    - It should include:
+        - Documents approaching their due date (within the next 7 days).
+        - Overdue Documents.
+        - Pending Extension Requests.
+The information and requirements should be customized according to each module.
+
 <hr/>
 
 3. Filter Bar (search, filter, no. of pages) should be the same as CAPA in all across the modules; look for the margin padding and space above and below that section ( space of tabs and header, space between Table and Filter bar and make sure everything's consistent across all the modules)
@@ -193,6 +217,19 @@ Step 1: do NOT edit yet - give me the audit checklist for this module (per point
 
 10. Overview Tab: For this, what we are suggesting is to keep 2-3 charts and only the KPI bar for now (May vary things a little for other modules). When any advisor or customer who is using the products needs that. So this tab should show the Data Analysis of these things, not just that (not customised, but what it really should show based on every customer POV). So yeah make those graphs, progress bars and all for the Overview tab - based on that specific module whatever is relevant to that.
 
+- The Overview page/tab should display the overall health and performance of each module through dynamic graphs.
+Graphs should include:
+- Total Open Documents
+- Total Closed Documents
+- Documents Due
+- Overdue Documents
+- Average Closure Time
+- Monthly Performance
+- Yearly Performance
+
+The graphs should automatically update based on the module's data.
+
+
 <hr/>
 
 11. Administration Tab should be hidden until we complete all the modules and implement the RBAC (Role based access control) - so maybe keep the tab button over there but as someone clicks on it show an alert saying - the relevant message that under development after RBAC will done blah blah like that...
@@ -223,7 +260,15 @@ Step 1: do NOT edit yet - give me the audit checklist for this module (per point
 
 16. For the Unique ID (CAPA no. , NCMR no.). Show auto-generated numbers like the image, but remove the time from initiation date. - Because see after point 13 those boxes will get removed right - so there should be a place where the relevant and important detail should be visible so:
 
-![Media for point 16](media/16.png)
+![Media for point 16](media/16_a.png)
+
+- And hey please make sure this mistake should not happen: Like the background color of the main page there (at back) and this box containing the - Deviation Number, Initiation Date, Initiator - its kinda like the same which is not looking good, the box is not visible uniquely its kinda looking attached to the background coz of the same colors. so i hope you got the issue, so this should not happen
+
+![Media for point 16 - (the mistake)](media/16_b.png)
+
+- This point (16) is connected to the point 22 so you will have better context once you read that as well.
+
+
 
 <hr/>
 
@@ -235,7 +280,13 @@ Step 1: do NOT edit yet - give me the audit checklist for this module (per point
 
 18. For adding the approvers, follow this UI below: i gues its in the audit and inspection module im not sure you can check and confirm it:, so make sure the places wherever the approvers adding is there so make sure that table and adding UI and all should be like this:
 
-![Media for point 18](media/18.png)
+![Media for point 18](media/18_a.png)
+
+and hey do not stretch the width of the 'Add Approver' button completely like this:
+
+![Media for point 18](media/18_b.png)
+
+Make this approver UI as i said exactly like media/18_a.png, see where the similar/identical UI is being used in the other module and implement it correctly.
 
 <hr/>
 
@@ -252,3 +303,59 @@ Step 1: do NOT edit yet - give me the audit checklist for this module (per point
 ![Media for point 20](media/20.png)
 
 <hr/>
+
+21. Margin, padding, font size, and weight should be the same as CAPA. Margin padding, fonts, size, etc. should remain the same as in CAPA 
+
+<hr/>
+
+22. For the Form UI: Take the 'Adverse Events & Vigilance' and 'Complaints' module for example/reference of how the form field(s) should look like - the card inside the main card with the specific headings, so on and so forth, like this UI.
+
+![Media for point 22](media/22_a.png)
+
+See focus on the colors and all how good it is loooking like theres the MAIN box that has background white i guess - then inside that whatever the section is its in one box in that MAIN box and those boxes inside the MAIN box has the color (greyisshh kinda) - which is imp coz that is differentiating and it looks good.
+
+- and remember the points 16 - (this point (22) and the point 16 are kinda connected): if you implement this (22) then that media/16_a.png box (containing the - Deviation Number, Initiation Date, Initiator.) that should be properlly visible coz now we are fixing the background colors and the boxes and forms and all UI.
+
+- SO yeah obviously this were just for reference - for other modules the sections can change coz they have different forms right? But yeah as you know this doc is for pointing out and deciding the Common UI consistency that we need to follow. So make sure whatever module you're working on implementing this, so make sure everything should allign and makes sense as per that module. 
+
+![Media for point 22](media/22_b.png)
+
+<hr/>
+
+23. For Dropdown fields/options UI: Hey so wherever in the form the dropdown field is there, onclicking dropdown is opening and there are options to select - So its been decided to keep this UI like it is in the - 'Advisory Notices, Field Actions and Recalls' module' - this has the updated one. See in the screenshots:
+
+- so yeah use this kinda UI for the dropdown fields. Make sure the functionality and logic and all should work correctly.
+
+![Media for point 23](media/23_a.png)
+![Media for point 23](media/23_b.png)
+
+<hr/>
+
+24. Use this kinda dropdown in place of tick boxes where more than one thing needs to be selected: use a multi-select dropdown like this: (wherever it is needed):
+
+![Media for point 24](media/24.png)
+
+<hr/>
+
+25. Comments & Attachments: For all the pages, wherever there is the comments and attachments section: itshould be like this: (It is implemented in Nonconformance/NCMR just only the background is not matched - so it will be fixed because we have the point 22 now so it will be fixed automatically and become consistent)
+
+- make sure you've gotta fix the font weights and all please make it consitent - like see that 25_b.png there the 'No files attached yet' - this is looking so light, but in the 25_a.png its looking fine - is it because of the point 22 or what? like is it once the point 22 will be implemented this thing will also be fixed - okay so whatever it is analyse things correctly and then act accordingly - so you see how important it is to fix the UI background and all and make it consistent.
+
+![Media for point 25](media/25_a.png)
+![Media for point 25](media/25_b.png)
+
+<hr/>
+
+26. For the Approval UI, Review Decision, accept, reject UI: So what's decided is that: wherever there is the approval step/stage for whoever assigned user - They should see a UI like this: left side there would be the document to read (the record summary) and at right side the Review Section: with youknow approve/reject (properly working). This was implemented under the 'Audits and Inspections' module so you can have a look into that as well for REFERENCE!
+
+- MAKE SURE PLEASE DO NOT KEEP THOSE RED MANDATORY * INDICATORS: only when say user/approver - wants to reject then only make the justification/comment field mandatory/required - else if they are approving then keep the comments optional.
+
+![Media for point 26](media/26.png)
+
+- And also an important thing: see somewhere like say see in NCMR its the dummy signatures or say the SC-initials are taking as signing, so this should not be there. Use the actual Account password (password used by the user to login) to eSign/signoff approval decision.. This behaviour should be consistent accross all the modules. 
+
+- If an approver rejects a document, providing a rejection reason must be mandatory.
+- Comments and attachments should be available at the bottom of every stage.
+
+<hr/>
+
