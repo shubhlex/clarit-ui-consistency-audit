@@ -402,3 +402,30 @@ See focus on the colors and all how good it is loooking like theres the MAIN box
 
 <hr/>
 
+27. Regarding the Dossier: The Dossier section/page should be like it is in NCMR (take NCMR for reference of layout and all everything), BUT with some little changes: that are:
+- Do not keep any colors like red-colors words, any green color etc… So do not keep any colors in the Dossier at all, it should be normal black colored text and yeah with necessary font weights and sizes (keep them sizes and weights normal as it is do not mess anything else that is already being fixed!! - we’ve just decided that to remove them colors)
+- And also one more thing, do not keep the numberings as well, like that “1…, 2 Immedia…” NO need of keeping the numberings, just the heading will do.
+- so long story short: For Dossier we will take reference from NCMR, but no color and numbering.
+
+![Media for point 27](media/27_a.png)
+![Media for point 27](media/27_b.png)
+![Media for point 27](media/27_c.png)
+
+<hr/>
+
+28. One more point for Dossier: at last there should be these two for all modules: First the Supporting Attachments & Uploaded Evidence Files and then the 21 CFR Part 11 Electronic Signatures Audit Trail - So currently the field action (Advisory Notices, Field Actions & Recalls) has the supporting attachments.. so take reference from there.
+
+> make sure - build the supporting attachments and all as per the specific modules whatever is relevant to it.
+
+![Media for point 28](media/28_a.png)
+![Media for point 28](media/28_b.png)
+
+<hr/>
+
+29. Regarding the Records Tab: So currently as we’ve decided for the records tab, so Records tab and the Registry tab are looking almost the same (on the basis of columns if we say) - So for the RECORDS tab Let's keep these columns: Number, title, Source, Owner Action(menu) - FOR RECORDS TAB/PAGE/SECTION ONLY. Registry untouched.
+
+> the image/screenshot is just for reference from some other UI, understand and Focus on the concept.
+
+![Media for point 29](media/29.png)
+
+<hr/>
