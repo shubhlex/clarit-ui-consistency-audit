@@ -204,10 +204,12 @@ Step 1: do NOT edit yet - give me the audit checklist for those points and rules
 - **The Registry should display all documents in a standard table with the following columns: Number, Title, Source, Current Stage, Owner, Days Open,Target Due Date, Status, Action** (this is correctly implemented in Deviation currently)
     - The Registry layout/UI should remain the same across all modules.
 
-- Action (3-dot menu):
+- Action (3-dot menu): (And here make sure beside the options there should be there respective icons as well.)
     - Open Workspace
     - View Dossier
     - View Audit Trail
+
+![Media for point 2 (The Action menu option icons)](media/2.png)
 
 - Needs Attention Tab/Page: This section should highlight documents that require immediate attention.
 
@@ -382,6 +384,8 @@ See focus on the colors and all how good it is loooking like theres the MAIN box
 
 - so yeah use this kinda UI for the dropdown fields. Make sure the functionality and logic and all should work correctly.
 
+- and also implement this dropdown UI in the filteration section there in Registry Tab, and you know all the tabs wherever in the filteration there is the dropdown, use this new UI only. like the all records, show 10 pages and all. so yeah make sure wherever there is the dropdown, do not make it the default html dropdown, make it the new UI that is decided - functionality should properly work.
+
 > **Clarification:** this is a look-and-feel change only. Keep the native `<select>` as the source of truth so values, `change` events, required/disabled state, dependent dropdowns and saved data work exactly as before (section D rule 12). Copy the styles into the current module's own CSS (rule 11).
 
 ![Media for point 23](media/23_a.png)
@@ -461,5 +465,23 @@ See focus on the colors and all how good it is loooking like theres the MAIN box
 > **Clarification:** the columns are **Number, Title, Source, Owner, Action**. Search, Year, Month and Status filters stay as they are. From the screenshot take only the column idea - not the blue ID link (point 6), breadcrumb, subtitle or fonts.
 
 ![Media for point 29](media/29.png)
+
+<hr/>
+
+30. Regarding the font size and all: SO actually see in the workspace as any user opens at any stage, so at the left box you know where all the things are there listed from starting stage to present stage ok - so see the "A. EVENT AND CONTAINMENT", "B. Impact and Risk (ISO 14971)" you know these headings they are looking a bit small, so like increase the font size here, it should be visible properly and comforting to the eyes.
+
+![Media for point 30](media/30.png)
+
+<hr/>
+
+31. Regarding the Text(long)/title in the Registry Tab's Table: So see in the registry tab table like as we've decided to make sure that the gaps are not inconsistent between the columns and all, so i currently its like its warping the text if it is getting long, let's say example of: see the Title: "Thermal curing oven temperature excursion above upper specification limit during distal tip bonding" - so see the title is long, so its wraping up the text in new lines ok - but let's do this - something else have been decided for this that is: if the length is too long so let's cut the title - show the words until a point and then show three dots (...) like: Thermal curing oven temperature excursion above... something like that (this was example - you have to maintain it as per that the table look consistent - no extra gaps should be in between columns and etc.)
+
+![Media for point 31](media/31.png)
+
+<hr/>
+
+32. Regarding the Capusles (Open, Closed..) of the Status Column: so what have been decided is See currently/previously these status capsules,- open, closed, and all - all these were, colored like reddish colored, greenish colored, and etc - So we have decided to not to put these colors - Let's keep it simple, minimal, a neutral color for all status like greyisshh is good - simple black text and grey bg.
+
+![Media for point 32](media/32.png)
 
 <hr/>
