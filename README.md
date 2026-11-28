@@ -1,7 +1,7 @@
 # Lexim Clarit - UI Consistency Audit (AI-agent briefing + decided points)
 
 > **If you are an AI coding agent, read this whole top section before touching anything.**
-> The 29 numbered points further down are the *decisions*. This section is the *context, scope, safety rules and method* for applying them.
+> The 32 numbered points further down are the *decisions*. **Points get added and updated over time - check the change log in section I.** This section is the *context, scope, safety rules and method* for applying them.
 > **Precedence:** if a numbered point contradicts or is vaguer than sections D and F below, **sections D and F win** (they hold the clarified, final interpretations). Point 24 is ON HOLD - do not implement it.
 
 ---
@@ -15,7 +15,7 @@ The team held a meeting, reviewed **every half-built and fully-built module**, a
 - There is **no single "golden module"**. CAPA is the reference for some things (header, filter bar, spacing), Complaints for others (table footer/pagination), "Advisory Notices, Field Actions and Recalls" (`fieldaction`) for others (tabs-as-routes, Records tab, audit-trail drawer), Audit & Inspection (`internalaudit`) for the approvers UI, and so on. See section C.
 - Modules are **not identical** (different purpose, different workflow stages, different roles). Apply the *look, structure and behaviour* of each decision, **not** one module's business logic. Where a point does not fit a module (e.g. no role-based approvals, so no "Needs Attention" content), adapt sensibly or skip and say so - never force it.
 - The screenshots in `media/` are the visual source of truth for each point. Open and look at them; do not rely on the text alone. File names map to point numbers (`3.png` -> point 3, `5_a/b/c.png` -> point 5, etc.).
-- **How current each module is (as of 2026-11-27):** **Deviation is the most up-to-date module** - points 1-26 are applied there (24 on hold); 27-29 are still to be done. **NCMR is behind** and will be brought up to date later. NCMR remains the reference only where this document names it (e.g. the dossier layout in point 27, the approver view in point 13) - **do not assume the rest of NCMR is current**. For anything in points 1-26, Deviation is a useful working example, but the reference map in section C and the rules in section F still decide.
+- **How current each module is (as of 2026-11-28):** **Deviation is the most up-to-date module** - points 1-26 are applied there (24 on hold) as they stood at the time; **points 2 and 23 have been updated since, and 27-32 are still to be done.** **NCMR is behind** and will be brought up to date later. NCMR remains the reference only where this document names it (e.g. the dossier layout in point 27, the approver view in point 13) - **do not assume the rest of NCMR is current**. For anything in points 1-26, Deviation is a useful working example, but the reference map in section C and the rules in section F still decide.
 
 ## B. Scope - whose modules, which branch
 
@@ -30,7 +30,7 @@ Paths are relative to `lexim-clarit/`. **Verify the file still exists and read i
 | Element (point) | Reference module | Where to look |
 |---|---|---|
 | Page header card, icon, hover/colour of buttons (1) | CAPA | `templates/capa/list.html`, `templates/capa/workspace.html` |
-| Filter bar: search, filter, rows-per-page; spacing between tabs / filter bar / table (3) | CAPA | `templates/capa/list.html` |
+| Filter bar: search, filter, rows-per-page; spacing between tabs / filter bar / table (3) | CAPA | `templates/capa/list.html` - layout and spacing; **the dropdown look comes from point 23**, not from CAPA |
 | Table footer + pagination, no trailing blank space (5) | Complaints registry | `templates/complaints/list.html` |
 | Tabs as separate routes/templates (2) | Field Actions, Internal Audit, Deviation (already do this) | `templates/fieldaction/{registry,overview,attention,records,admin}.html` + `base_fieldaction.html`, `modules/fieldaction/urls.py`; `templates/deviation/*`; `templates/internalaudit/*` |
 | Tab bar *visual* style, margins, font, size (2) | CAPA | tab bar at `modules/capa/views.py` (~line 1018, `tabs` list) and `templates/capa/list.html` |
@@ -39,14 +39,17 @@ Paths are relative to `lexim-clarit/`. **Verify the file still exists and read i
 | Audit Trail / Signatures right-side collapsible panel (19) | Field Actions | `templates/fieldaction/detail.html` (~line 1627, `toggleSidePanel`, `switchSideTab`) |
 | Info box: ID, Initiation Date (no time), Initiator (16) | CAPA workspace | `templates/capa/workspace.html` (see `media/16_a.png`; avoid the mistake in `16_b.png`) |
 | Overview KPIs + charts (10) | No single reference - design per module | see point 10 |
-| Registry columns + Action (3-dot) menu (2) | Deviation | `templates/deviation/registry.html`, `templates/deviation/_row_menu.html` |
+| Registry columns + Action (3-dot) menu (2) | Deviation for columns and menu items; **icons and the vertical ⋮ button as in section F** | `templates/deviation/registry.html`, `templates/deviation/_row_menu.html`; icons: see `media/2.png` |
 | Form look: white main card containing grey section cards (22) - **container/background only** | Adverse Events & Vigilance, Complaints | `templates/vigilance/workspace.html`, `static/qmsui/css/*vigilance*`, `templates/complaints/workspace.html` (see `media/22_a.png`, `22_b.png`) |
-| Dropdown (select) look (23) | Field Actions | `static/qmsui/css/fieldaction.css`, `static/qmsui/css/fieldaction_initiate.css` (see `media/23_a.png`, `23_b.png`) |
+| Dropdown (select) look (23) - forms, dialogs, **filter bars and rows-per-page** | Field Actions | `static/qmsui/css/fieldaction.css`, `static/qmsui/css/fieldaction_initiate.css` (see `media/23_a.png`, `23_b.png`) |
 | Comments & Attachments block (25) | Adverse Events & Vigilance (`25_a.png` is the target; `25_b.png` is the same block *without* point 22 applied) | vigilance workspace template + CSS |
 | Approval / Review Decision screen (26) | Audits & Inspections | `templates/internalaudit/inspection_review.html`, `review.html`, `report_review.html` (see `media/26.png`); Deviation already implements e-sign via `/auth/iam/reauthenticate/` (`static/qmsui/js/deviation_workspace.js`, `modules/deviation/services.py::verify_proof`) |
 | Dossier layout (27) | NCMR - **layout only** (no colours, no heading numbers, no initials column) | `templates/nonconformance/dossier.html` (see `media/27_a.png`, `27_b.png`, `27_c.png`; the file can differ between branches) |
 | Dossier "Supporting Attachments & Uploaded Evidence Files" table (28) | Field Actions - **structure only**, not its colours | `templates/fieldaction/dossier.html` (see `media/28_a.png`, `28_b.png`) |
 | Records tab columns (29) | The point itself (`media/29.png` is a concept only, from another UI) | see point 29 and section F |
+| Section headings in the workspace's left record panel (30) | The point itself (`media/30.png` shows the **current, too small** headings) | see section F |
+| Long titles in tables (31) | The point itself (`media/31.png` shows the **current, wrapping** titles) | see section F |
+| Status capsule colour (32) | The point itself (`media/32.png` shows the **current, coloured** capsules) | see section F |
 
 > Important: **CAPA is NOT the reference for tab names/URLs.** CAPA currently uses one page with `?tab=` and prefixed names ("CAPA Registry", "CAPA Records"). Point 2 is a decision that *CAPA itself will also change*; copy CAPA's visuals, not its tab naming/routing.
 
@@ -63,14 +66,14 @@ Paths are relative to `lexim-clarit/`. **Verify the file still exists and read i
 9. **Do not commit or push** unless the user asks. When git commands are needed, print them in the reply for the user to run.
 10. **Don't guess silently.** If a point is ambiguous for this module, or the screenshot and text disagree, pick the least-invasive interpretation, state it clearly in your summary, and ask when the choice is risky.
 11. **Reference modules are read-only.** When copying a pattern from another module (e.g. dropdown CSS from Field Actions, approvers CSS from Internal Audit, card styling from Vigilance), **copy/adapt the styles and markup into the current module's own files**. Never edit the reference module's files and never make the current module depend on another module's CSS/JS file unless the user approves.
-12. **Preserve form behaviour when restyling controls.** For point 23 (custom dropdown look) keep the native `<select>` as the source of truth (same value, same `change` events, same `required`/`disabled` handling, same saved data), keep dependent dropdowns working (e.g. country following region), keyboard access (arrow keys, Enter, Esc, Tab), close-on-outside-click, and Save Draft/Submit payloads exactly as before. Single "I confirm..." checkboxes (including the e-signature confirmation) are **not** multi-selects and stay as they are.
+12. **Preserve form and filter behaviour when restyling controls.** For point 23 (custom dropdown look, **including filter and rows-per-page dropdowns - filtering, sorting and pagination must work as before**) keep the native `<select>` as the source of truth (same value, same `change` events, same `required`/`disabled` handling, same saved data), keep dependent dropdowns working (e.g. country following region), keyboard access (arrow keys, Enter, Esc, Tab), close-on-outside-click, and Save Draft/Submit payloads exactly as before. Single "I confirm..." checkboxes (including the e-signature confirmation) are **not** multi-selects and stay as they are.
 
 ## E. Method (follow this order)
 
 1. Read this README fully and **look at every image** in `media/`.
 2. Read `claude-stuff/notes/` for a note on the current module, and `DOCS/HANDOFF.md`.
-3. **Audit first, no edits:** for the current module, go through points 1-29 (24 is ON HOLD: just list it as "on hold") and produce a checklist: *already consistent / needs change / not applicable (why)*, with the file(s) involved. Show it to the user and get a go-ahead unless they said to proceed directly.
-4. Implement point by point (small, reviewable steps). After each point, re-check the pages you touched. **Recommended order:** point 22 first (form containers/backgrounds - points 16 and 25 depend on it), then 16 and 25, then the rest (1-15, 17-21, 23, 29), then the dossier points 27 and 28 together, and point 26 **last** (it includes the real-password backend step). Skip 24 (on hold).
+3. **Audit first, no edits:** for the current module, go through points 1-32 (24 is ON HOLD: just list it as "on hold") and produce a checklist: *already consistent / needs change / not applicable (why)*, with the file(s) involved. Show it to the user and get a go-ahead unless they said to proceed directly.
+4. Implement point by point (small, reviewable steps). After each point, re-check the pages you touched. **Recommended order:** point 22 first (form containers/backgrounds - points 16 and 25 depend on it), then 16 and 25, then the rest (1-15, 17-21, 23, 29-32), then the dossier points 27 and 28 together, and point 26 **last** (it includes the real-password backend step). Skip 24 (on hold).
 5. **Verify before claiming done** (from `lexim-clarit/`, Python 3.11 venv):
    - `python manage.py check` -> 0 issues
    - `python manage.py test tests.<relevant_test_module> --keepdb` -> all pass
@@ -96,12 +99,17 @@ These resolve small contradictions/gaps in the notes below so agents behave cons
 - **Registry columns, Action menu, Overview, Needs Attention (2, 10)**: the standard Registry columns are Number, Title, Source, Current Stage, Owner, Days Open, Target Due, Status, Action (Deviation is the reference). Use each module's equivalent existing data for each column; if a module has no such data, show "—" or skip the column and report it - **never add model fields or backend logic just to fill a column**. Action menu = Open Workspace, View Dossier, View Audit Trail; only show an item if that page already exists for the module (don't build new pages without asking). Overview (10): KPI bar = Open, Closed, Due, Overdue, Average Closure Time; charts = Monthly Performance and Yearly Performance (+ optionally one status breakdown) - 2-3 charts max, computed from the module's real data, no hard-coded numbers.
 - **Point 21 scope**: "same margin/padding/font size/weight as CAPA" applies only to the elements covered by the other points (header, tabs, filter bar, table, buttons, forms). It is **not** a license to restyle the whole module.
 - **Forms (22) - container/background reference only**: copy only the *structure and colours*: a white main card containing grey-ish section cards with a heading each. **Do not** copy anything else from the Complaints/Vigilance screenshots: helper text under fields (point 15 still applies), regulatory/"Auto" badges, ISO/regulation lines under headings, or `e.g.` placeholders (point 14 still applies). Sections/fields are whatever the current module already has - only wrap/style them. This is the foundation for 16 and 25: the info box (16) must be visibly distinct from the page background (white or bordered card, not the same grey as the page).
-- **Dropdowns (23)**: restyle to the Field Actions look (see rule 12 in section D). Functionality must be unchanged.
+- **Dropdowns (23)**: restyle to the Field Actions look (see rule 12 in section D). Functionality must be unchanged. This covers **every dropdown in the module**: forms, dialogs, **and the filter bars and rows-per-page ("10 / page") dropdowns on every tab** - no default browser dropdown stays. **This replaces any earlier module-level decision to keep filter dropdowns native.** The open menu must not be cut off by the filter bar or table. Multi-select (24) is still on hold. Dropdowns that live in shared files follow rule 4 (ask first).
+- **Action menu (2)**: the row menu button is **three vertical dots (⋮)**. Every option has an icon in one matching style: Open Workspace (folder) and View Dossier (document) as in `media/2.png`, and a fitting icon in the same style for View Audit Trail. `2.png` shows only two options - **do not remove View Audit Trail** (the existing rule still applies: show only items whose page exists). Use inline/existing icons, no new library. Opening, closing, keyboard use and not being clipped by the table must keep working. A module may build this menu in more than one place (Deviation: `templates/deviation/_row_menu.html` **and** `DV.rowMenu` in `static/qmsui/js/deviation_common.js`) - update all of them.
+- **Section headings in the left record panel (30)**: in the workspace, at every stage, make the section headings of the read-only record on the left (e.g. "A. EVENT AND CONTAINMENT", "B. Impact and Risk (ISO 14971)") **larger and comfortable to read, but still a little smaller than the step heading** (e.g. "INTAKE"). Keep their colour. Field labels and values do not change size - if headings share a style with labels (Deviation's `docSections()` uses the same `k` class for both), give the headings their own style. Keep the "A.", "B." letters in the workspace; **in the dossier the letters are removed** (point 27, no numbering). The size change must not leak into the dossier, which follows point 27.
+- **Long titles in tables (31)**: applies to the **Title** column in **Registry, Needs Attention and Records**. A long title stays on one line and ends in "..."; hovering shows the full title. Cut by the available width (CSS), **not** a fixed character count, and do not shorten the data: search, sort and any export use the full title, and the workspace, dossier and print show it in full. **The table must look even: consistent column spacing, no large blank gaps between columns (including after the "...") and no leftover space at the table edge** (point 5). Only Title is shortened; it takes the width the other columns leave and shrinks first, so that Source, Stage, Owner etc. do not wrap when there is room. On narrow screens they may wrap, or the table may scroll sideways inside its card. The Action menu must not get clipped.
+- **Status capsules (32)**: **all status capsules in the module are neutral: grey background, black text** - in tables, cards, panels and anywhere else, for **every** status (Open, Closed, Draft, Overdue, Pending, Approved, Rejected, Completed, Cancelled, etc.). One single neutral style, no red/green/yellow/blue. Change colour only: the status words, capsule shape, status values, filters and logic stay (keep class names that scripts rely on). Things that are not status capsules (buttons, required `*`, error messages, banners, charts, KPI numbers, selected multi-select values) are not covered by this point. **Point 27 is unchanged:** the dossier has no colour and shows statuses as plain black text without a capsule shape.
+- **Outdated parts of older screenshots**: where a screenshot added for one point shows something a later point changed, **the later point wins**: default browser dropdown lists (`3.png`, `9.png`) -> point 23; coloured status capsules (`4.png`, `5_b.png`, `5_c.png`, `9.png`) -> point 32; linked record numbers (`5_a.png`, `5_b.png`, `5_c.png`, `29.png`) -> point 6; horizontal "⋯" menu buttons (e.g. `32.png`) -> vertical ⋮ (point 2). Everything else those screenshots show for their own point still applies.
 - **Multi-select (24) - ON HOLD**: the team has not decided the multi-select UI yet. **Do not implement, and leave existing checkbox groups untouched.** (Known instance: Deviation "Markets where the product was distributed"; NCMR has none.)
 - **Comments & Attachments (25)**: target = `media/25_a.png` (Vigilance), same block as NCMR's `25_b.png` but without point 22 applied. After point 22 is done, compare the block with Vigilance's real CSS and fix any remaining difference (e.g. the "No files attached yet." text colour/size/weight, heading weight) by matching Vigilance's values. Point 22 alone only fixes container/background colours. **No Post button:** the block has no separate Post / Add comment button. Typed comments and chosen files are saved with `Save Draft`, the `Save & Continue` / `Submit` button, or the signature. What gets recorded (author, time, step, audit entry) stays as it is.
 - **Approval / Review screen (26)**: stays **inside the existing workspace window** (no new page/route). Layout: record summary (read-only) on the left, Review Decision card on the right. The Audit Trail / Signatures right-side collapsible panel (point 19) is unchanged. Review card: Decision (Approve / Reject), Review Comments / Justification, 21 CFR Part 11 e-signature box (Email ID read-only + real account Password + confirm checkbox). **Asterisks:** Decision, Email, Password and the confirm checkbox keep their red `*` (always required); the Comments/Justification field shows the red `*` and is mandatory **only when Reject is selected**, optional (no `*`) when Approve. A rejection reason is mandatory on reject. **Button label:** "Sign & Confirm Approval" when Approve is selected, "Sign & Reject" when Reject is selected (changes with the Decision dropdown). Signing must use the user's real login password (point 26 backend exception in section D rule 2). Comments & Attachments appear at the bottom of every stage, **with one exception: the person making a review or approval decision. For them the Review Decision card is the only place to type or attach, so do not also show a Comments & Attachments box on that screen. Comments and files already saved show read-only with the record.** Use existing fields; if a stage has no storage for them, ask before adding any.
 - **No initials as a signature (26, 27):** typing initials never counts as signing; signing uses the real account password. Accordingly, **the "Account Initials" column is dropped from the dossier's signature table** (it is visible in NCMR's `27_c.png` - do not copy it, and remove it from NCMR in its own pass, ideally together with NCMR's real-password step). This changes the display only: stored signature data, including any initials already saved, is never edited or deleted. Removing the column does **not** by itself make a module's signing real.
-- **Dossier layout (27):** the whole dossier page follows NCMR's layout: the buttons at the top (Back to Workspace, Print / Save PDF, Edit in Workspace); the white sheet; the title block (top line, "... Dossier: <NUMBER>", record title, generated time, lifecycle state, divider); section headings with dividers; label-and-value rows; long text in grey boxes; tables with grey header rows; and NCMR's font sizes and weights. **Layout only:** each module keeps its own sections and fields; which buttons appear follows the module's existing permissions and record locks (never enable editing just because NCMR shows the button); dates stay readable (do not copy raw values like `07:50:25.034922+00:00`). **No section numbers:** remove the leading "1.", "2." from headings only - numbers inside data (record numbers, stage names such as "Stage 3 · Evaluation", text the user typed) stay.
+- **Dossier layout (27):** the whole dossier page follows NCMR's layout: the buttons at the top (Back to Workspace, Print / Save PDF, Edit in Workspace); the white sheet; the title block (top line, "... Dossier: <NUMBER>", record title, generated time, lifecycle state, divider); section headings with dividers; label-and-value rows; long text in grey boxes; tables with grey header rows; and NCMR's font sizes and weights. **Layout only:** each module keeps its own sections and fields; which buttons appear follows the module's existing permissions and record locks (never enable editing just because NCMR shows the button); dates stay readable (do not copy raw values like `07:50:25.034922+00:00`). **No section numbers or letters:** remove the leading "1.", "2." (and sub-section letters such as "A.", "B.") from headings only - numbers inside data (record numbers, stage names such as "Stage 3 · Evaluation", text the user typed) stay.
 - **Dossier colours (27):** everything on the white sheet is black text, including lifecycle state, quantities, decisions, cancellation rows, category labels/chips (plain text) and links. **It must still look good and be easy to scan:** use font weight and size, spacing, dividers, borders and light grey backgrounds (table headers, long-text boxes) for hierarchy. File names stay clickable and are **black and underlined** so they look clickable. The buttons above the sheet keep their normal colours.
 - **Regulatory citations in the dossier (27):** ISO/FDA text stays in the dossier where the module already has it (e.g. NCMR's top line and headings), in black - point 1's removal applies to page headers, not the dossier. **Never invent a citation and never borrow another module's.** A module without approved citations uses the top line "Quality Management System Record" with plain headings; citations can be added later only from text the PM/QA approved. (The team-decided heading "21 CFR Part 11 Electronic Signatures Audit Trail" in point 28 is used by every module.)
 - **Dossier signature table (27, 28):** columns, in this order: **Workflow Stage, Signer Name & Role, Signing Timestamp, Regulatory Meaning**. Keep every signature row, including cancellation rows. Use the module's existing data: if the signature record does not store the role signed as, show name (and email); **never fill in the person's current role**, it may differ from the role they signed in. No new model fields. Label the time zone truthfully (write "(UTC)" only if the values shown are UTC).
@@ -142,11 +150,14 @@ These resolve small contradictions/gaps in the notes below so agents behave cons
 | 27 Dossier (NCMR layout, no colour/numbers/initials) | ☐ | ☐ | ☐ |
 | 28 Dossier ends with Attachments + Signatures | ☐ | ☐ | ☐ |
 | 29 Records tab columns | ☐ | ☐ | ☐ |
+| 30 Larger section headings in left record panel | ☐ | ☐ | ☐ |
+| 31 Long titles shortened, even table | ☐ | ☐ | ☐ |
+| 32 Neutral status capsules | ☐ | ☐ | ☐ |
 
 ## H. Copy-paste prompt (use in any module/branch)
 
 ```text
-Read DOCS/CONSISTENCY/README.md completely (sections A-H and all 29 points; point 24 is on hold) and look at every image in DOCS/CONSISTENCY/media/. Then make the module I'm currently working in (<MODULE NAME>, on the current git branch) UI-consistent with the decided points.
+Read DOCS/CONSISTENCY/README.md completely (sections A-I and all 32 points; point 24 is on hold) and look at every image in DOCS/CONSISTENCY/media/. Then make the module I'm currently working in (<MODULE NAME>, on the current git branch) UI-consistent with the decided points.
 
 Rules: follow section D strictly. Change only what the points require, do not break or alter anything that already works (workflows, e-signatures, audit logs, permissions, URLs, data), do not edit shared files (base.html, partials, shared CSS/JS) or other modules without asking me, and never touch the 4 Cognito bypass files.
 
@@ -158,12 +169,25 @@ Step 1: do NOT edit yet - give me the audit checklist for this module (per point
 **Shorter prompt for a module that already had a consistency pass** (fill in the module and the point numbers that are new or changed):
 
 ```text
-Read DOCS/CONSISTENCY/README.md completely (all of sections A-H, plus all 29 points) and look at the images for points <NEW OR CHANGED POINTS>. This module (<MODULE NAME>, on the current git branch) already had a consistency pass. Also read its note in claude-stuff/notes/. Now bring it up to date for points <NEW OR CHANGED POINTS>, and for any rule in section F that was added or changed since that pass.
+Re-read DOCS/CONSISTENCY/README.md completely from disk, even if you read it before (all of sections A-I, plus all 32 points; do not rely on memory), and look at the images for points <NEW OR CHANGED POINTS>. A point listed here that was UPDATED since the last pass is not "already consistent" just because it was applied before. This module (<MODULE NAME>, on the current git branch) already had a consistency pass. Also read its note in claude-stuff/notes/. Now bring it up to date for points <NEW OR CHANGED POINTS>, and for any rule in section F that was added or changed since that pass.
 
 Rules: follow section D strictly. Do not redo or restyle anything that is already consistent. Do not break anything that already works (workflows, e-signatures, audit logs, permissions, URLs, data, printing, other screens that share the same code), do not edit shared files or other modules without asking me, and never touch the 4 Cognito bypass files.
 
 Step 1: do NOT edit yet - give me the audit checklist for those points and rules (already consistent / needs change / not applicable, with files), and tell me if you notice that something done earlier has regressed. Step 2: after I approve, implement, run manage.py check and the relevant tests, and tell me what to click-test in the browser. Don't commit; print any git commands for me to run.
 ```
+
+## I. Change log (newest first)
+
+**How to use it:** find when the current module had its last consistency pass (its note in `claude-stuff/notes/`, or ask the user), then check every entry after that - **both new points and updates to old points**. If unsure what exactly changed, run `git log -p -- README.md` inside `DOCS/CONSISTENCY/`. **Whenever this README's decisions change, add an entry here.**
+
+| Date | New points | Updated points and rules |
+|---|---|---|
+| 2026-11-28 | 30 (larger section headings), 31 (long titles shortened), 32 (neutral status capsules) | **2**: Action menu icons, vertical ⋮ button. **23**: new dropdown look also for filter bars and rows-per-page. **27**: sub-section letters ("A.", "B.") also removed in the dossier |
+| 2026-11-27 | 27 (dossier layout), 28 (dossier ending), 29 (Records columns) | **26/27**: no "Account Initials" column. Clarified dossier colours, citations, signature table; added the shorter prompt in H |
+| 2026-11-27 | - | **13**: approver view has no progress bar. **25**: no Post button. **25/26**: one comment input on review screens |
+| 2026-11-25 | 21-26 (24 on hold) | **2** (Registry columns, Action menu, Needs Attention), **10**, **16**, **18** expanded; sections D/F clarified |
+| 2026-11-24 | 20 | - |
+| 2026-11-23 | 1-19 | First version with the AI-agent briefing |
 
 ---
 
@@ -209,6 +233,8 @@ Step 1: do NOT edit yet - give me the audit checklist for those points and rules
     - View Dossier
     - View Audit Trail
 
+> **Clarification:** the menu button is **three vertical dots (⋮)**. Keep all three options, each with an icon (the screenshot shows only two). Details in section F, "Action menu (2)".
+
 ![Media for point 2 (The Action menu option icons)](media/2.png)
 
 - Needs Attention Tab/Page: This section should highlight documents that require immediate attention.
@@ -222,6 +248,8 @@ The information and requirements should be customized according to each module. 
 <hr/>
 
 3. Filter Bar (search, filter, no. of pages) should be the same as CAPA in all across the modules; look for the margin padding and space above and below that section ( space of tabs and header, space between Table and Filter bar and make sure everything's consistent across all the modules)
+
+> **Note:** the open dropdown list in this screenshot is the old browser default. Dropdowns, including filter and rows-per-page ones, now use the look from **point 23**.
 
 ![Media for point 3](media/3.png)
 
@@ -388,6 +416,8 @@ See focus on the colors and all how good it is loooking like theres the MAIN box
 
 > **Clarification:** this is a look-and-feel change only. Keep the native `<select>` as the source of truth so values, `change` events, required/disabled state, dependent dropdowns and saved data work exactly as before (section D rule 12). Copy the styles into the current module's own CSS (rule 11).
 
+> **Filter bars:** this includes the filter and "10 / page" dropdowns on every tab, replacing any earlier module-level decision to keep them as browser defaults. Filtering, sorting and pagination must work as before.
+
 ![Media for point 23](media/23_a.png)
 ![Media for point 23](media/23_b.png)
 
@@ -470,17 +500,23 @@ See focus on the colors and all how good it is loooking like theres the MAIN box
 
 30. Regarding the font size and all: SO actually see in the workspace as any user opens at any stage, so at the left box you know where all the things are there listed from starting stage to present stage ok - so see the "A. EVENT AND CONTAINMENT", "B. Impact and Risk (ISO 14971)" you know these headings they are looking a bit small, so like increase the font size here, it should be visible properly and comforting to the eyes.
 
+> **Clarification (screenshot = current state):** make these section headings larger but still a little smaller than "INTAKE"; keep their colour; field labels stay as they are. "A.", "B." stay in the workspace and are removed in the dossier. Details in section F.
+
 ![Media for point 30](media/30.png)
 
 <hr/>
 
 31. Regarding the Text(long)/title in the Registry Tab's Table: So see in the registry tab table like as we've decided to make sure that the gaps are not inconsistent between the columns and all, so i currently its like its warping the text if it is getting long, let's say example of: see the Title: "Thermal curing oven temperature excursion above upper specification limit during distal tip bonding" - so see the title is long, so its wraping up the text in new lines ok - but let's do this - something else have been decided for this that is: if the length is too long so let's cut the title - show the words until a point and then show three dots (...) like: Thermal curing oven temperature excursion above... something like that (this was example - you have to maintain it as per that the table look consistent - no extra gaps should be in between columns and etc.)
 
+> **Clarification (screenshot = current state):** applies to the Title column in Registry, Needs Attention and Records. One line ending in "...", full title on hover, cut by available width. Only Title is shortened. The table stays even, with no extra gaps. Details in section F.
+
 ![Media for point 31](media/31.png)
 
 <hr/>
 
 32. Regarding the Capusles (Open, Closed..) of the Status Column: so what have been decided is See currently/previously these status capsules,- open, closed, and all - all these were, colored like reddish colored, greenish colored, and etc - So we have decided to not to put these colors - Let's keep it simple, minimal, a neutral color for all status like greyisshh is good - simple black text and grey bg.
+
+> **Clarification (screenshot = current state):** **all** status capsules in the module, in tables and everywhere else, become grey with black text. Point 27 is unchanged: the dossier stays without colour, with statuses as plain black text. Details in section F.
 
 ![Media for point 32](media/32.png)
 
